@@ -1,8 +1,10 @@
 const  User = require ("./model") 
-// const jwt = require ("jsonwebtoken")      //------- *****
+
+const jwt = require ("jsonwebtoken")     
 
 
 //----------------------------------------------------------
+
 // http://localhost:5002/users/register
 // {
 //     "username" : "Billy",
@@ -96,11 +98,13 @@ const deleteUser = async (req, res) => {
 
 const login = async (req, res) => {
     try {
+      const token = await jwt.sign({id: req.user.id}, process.env.SECRET);
         res.status(200).json({
             message: "success",
             user: {
-                username: req.body.username,
-                email: req.body.email
+                username: req.user.username,
+                email: req.user.email,
+                token : token
             }
         })
     } catch (error) {
