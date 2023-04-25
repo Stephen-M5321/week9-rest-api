@@ -4,7 +4,7 @@ const express = require("express")
 const port = process.env.PORT || 5002  
 
 const userRouter = require("./users/routes")
-const exampleRouter = require("../middlewareExample")
+// const exampleRouter = require("../middlewareExample")
 
 const User = require("./users/model")
 
@@ -17,7 +17,7 @@ const syncTables = () => {
 } 
 
 app.use(userRouter)
-app.use(exampleRouter)
+// app.use(exampleRouter)
 
 app.get("/health", (req, res) => {
     res.status(200).json({message: "api is working"})

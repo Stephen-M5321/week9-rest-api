@@ -9,11 +9,13 @@ const  User = require ("./model")
 const registerUser = async (req, res) => {
     try { 
         console.log("next called and inside controller")
+
         // const user = await User.create({
         //     username: req.body.username,
         //     email: req.body.email,
         //     password: req.body.password
         // });
+
         const user = await User.create(req.body)
         res.status(201).json({
             message: "success",
@@ -45,6 +47,7 @@ const getAllUsers = async (req, res) => {
 //     "updateKey" : "email",
 //     "updateValue" : "BillyA@billymail.com"
 // }
+
 const updateUser = async (req, res) => {
     try {
       const updateResult = await User.update(
@@ -85,12 +88,6 @@ const login = async (req, res) => {
     }
 }
 
-
-
-//TODO: Add the rest of the CRUD operations
-// getAllUsers
-// updateUser
-// deleteUser
 
 module.exports = {
     registerUser,
