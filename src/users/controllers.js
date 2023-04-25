@@ -1,5 +1,9 @@
 const  User = require ("./model") 
+// const jwt = require ("jsonwebtoken")      //------- *****
 
+
+//----------------------------------------------------------
+// http://localhost:5002/users/register
 // {
 //     "username" : "Billy",
 //     "email": "Billy@billymail.com",
@@ -26,6 +30,9 @@ const registerUser = async (req, res) => {
     }
 }
 
+//----------------------------------------------------------------------
+//http://localhost:5002/users/getUsers
+
 
 const getAllUsers = async (req, res) => {
     try {
@@ -48,6 +55,8 @@ const getAllUsers = async (req, res) => {
 //     "updateValue" : "BillyA@billymail.com"
 // }
 
+//----------------------------------------------------------------------
+
 const updateUser = async (req, res) => {
     try {
       const updateResult = await User.update(
@@ -61,6 +70,8 @@ const updateUser = async (req, res) => {
     }
 };
 
+  //---------------------------------------------------------------------------
+
 const deleteUser = async (req, res) => {
     try {
       const result = await User.destroy({
@@ -73,6 +84,15 @@ const deleteUser = async (req, res) => {
       res.status(501).json({ errorMessage: error.message, error: error });
     }
   }; 
+
+  //---------------------------------------------------------------------------
+  //http://localhost:5002/users/login
+
+// {
+//   "username": "billy",
+//   "email": "billy@billymail.com",
+//   "password": "password123"
+// }
 
 const login = async (req, res) => {
     try {
@@ -88,6 +108,7 @@ const login = async (req, res) => {
     }
 }
 
+  //---------------------------------------------------------------------------
 
 module.exports = {
     registerUser,
