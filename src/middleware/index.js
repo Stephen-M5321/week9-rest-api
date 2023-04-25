@@ -18,18 +18,18 @@ const comparePass = async (req, res, next) => {
         //TODO: 
         // Find user in our database using the username passed in req.body
         // req.user = await User ....
-
         // use .compare() method to compare if the plain text password matches the hashed version stored in the database 
-
         // Error handeling if password don't match OR username doesn't exist in the database 
-
         // if they do match, continue to the controller
+
         req.user = await User.findOne({where: {username: req.body.username}})      
 
         if (req.user === null) {
             throw new Error ("password or username doesn't match")
         }
+        
         // let hashedPassword = req.user.password
+
         const comparePassword = await bcrypt.compare(req.body.password, req.user.password)
 
         if(!comparePassword){
