@@ -1,6 +1,10 @@
 const User = require("../users/model") 
 
+const jwt = require("jsonwebtoken")
+
 const bcrypt = require("bcrypt")
+
+const { JsonWebTokenError } = require("jsonwebtoken")
 
 const saltRounds = process.env.SALT_ROUNDS
 
@@ -42,7 +46,34 @@ const comparePass = async (req, res, next) => {
     }
 }
 
+const tokenCheck = async (req, res, next) => {
+    try {
+        if  (!req.header("Authorization")) {
+            throw new Error("No header or token passed in request")
+        }
+        console.log(req.header("Authorization")) 
+        const token = req.header("Authorization").replace("Bearer", "")
+        console.log("!!!!!")
+        console.log(token)
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        console.log("!!!!!")
+        console.log(decodedToken)
+        const user = await User.findOne({where: {id: decodedToken.id}})
+        console.log(user)
+        if(!user){
+            throw new error("User is not authorised")
+        }
+        req.authUser = user
+        
+        next()
+        
+    } catch (error) {
+        res.status(501).json({errorMessage: error.message, error: error}) 
+    }
+}
+
 module.exports = {
     hashPass,
-    comparePass
+    comparePass,
+    tokenCheck
 }
