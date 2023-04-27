@@ -52,19 +52,31 @@ const tokenCheck = async (req, res, next) => {
             throw new Error("No header or token passed in request")
         }
         console.log(req.header("Authorization")) 
-        const token = req.header("Authorization").replace("Bearer", "")
+        const token = req.header("Authorization").replace("Bearer ", "")
         console.log("!!!!!")
         console.log(token)
+
         const decodedToken = jwt.verify(token, process.env.SECRET)
         console.log("!!!!!")
         console.log(decodedToken)
+
         const user = await User.findOne({where: {id: decodedToken.id}})
         console.log(user)
+
         if(!user){
             throw new error("User is not authorised")
         }
         req.authUser = user
+
+        console.log("!!!!!!!!!!")
+        console.log(user)
+        if(!user) {
+            throw new error("user is not authorised")
+        }
+        req.authUser = user
         
+        console.log("!!!!!!!1")
+        console.log(req.authUser)
         next()
         
     } catch (error) {
